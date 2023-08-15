@@ -67,15 +67,21 @@ function agregarElementoAlLocalStorage(texto, completado = false) {
     }
 
     let listaItems = JSON.parse(localStorage.getItem("listaItems")) || []
-    listaItems.push(newItem)
-    localStorage.setItem("listaItems", JSON.stringify(listaItems))
+
+    let valor = listaItems.some(obj => obj.texto.toLowerCase() == newItem.texto.toLowerCase())
+
+    if (!valor) {
+        listaItems.push(newItem)
+        listaItems.sort((a, b) => (a.texto.toLowerCase() > b.texto.toLowerCase()) ? 1 : (a.texto.toLowerCase() < b.texto.toLowerCase()) ? -1 : 0)
+        localStorage.setItem("listaItems", JSON.stringify(listaItems))
+    }
 }
 
 // Función para cargar la lista de elementos desde el almacenamiento local
 function cargarListaDesdeLocalStorage() {
     const listaItems = JSON.parse(localStorage.getItem("listaItems")) || []
 
-    listaItems.forEach(function(item, index) {
+    listaItems.forEach(function (item, index) {
         // Crear el contenedor para el tick y el item
         const itemContainer = document.createElement("div")
         itemContainer.classList.add("item-container")
@@ -86,7 +92,7 @@ function cargarListaDesdeLocalStorage() {
         tick.checked = item.completado
 
         // Guardo el estado del tick en el almacenamiento local
-        tick.addEventListener("change", function() {
+        tick.addEventListener("change", function () {
             item.completado = tick.checked
             localStorage.setItem("listaItems", JSON.stringify(listaItems))
         })
@@ -115,7 +121,7 @@ function cargarListaDesdeLocalStorage() {
 }
 
 // Evento de click para eliminar un elemento individual
-seccionItems.addEventListener("click", function(event) {
+seccionItems.addEventListener("click", function (event) {
     if (event.target.classList.contains("eliminar-item")) {
         const index = parseInt(event.target.getAttribute("data-index"))
         eliminarElemento(index)
@@ -123,7 +129,7 @@ seccionItems.addEventListener("click", function(event) {
 })
 
 // Evento de click para agregar elementos
-presionarAgregar.addEventListener("click", function() {
+presionarAgregar.addEventListener("click", function () {
     //capturo el texto ingresado en el input
     const textoItem = input1.value
 
@@ -145,7 +151,7 @@ presionarAgregar.addEventListener("click", function() {
 function eliminarElemento(index) {
     let listaItems = JSON.parse(localStorage.getItem("listaItems")) || []
     // Elimino el elemento del arreglo, según su índice
-    listaItems.splice(index, 1) 
+    listaItems.splice(index, 1)
     localStorage.setItem("listaItems", JSON.stringify(listaItems))
 
     // Limpio y recargo la lista desde el almacenamiento local
@@ -154,7 +160,7 @@ function eliminarElemento(index) {
 }
 
 //Evento click para eliminar todos los elementos
-presionarEliminar.addEventListener("click", function() {
+presionarEliminar.addEventListener("click", function () {
     localStorage.clear()
     seccionItems.innerHTML = ""
 })
