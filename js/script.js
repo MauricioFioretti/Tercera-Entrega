@@ -43,13 +43,13 @@ seccionEliminar.classList = "eliminar"
 main.appendChild(seccionEliminar)
 
 //Agrego un label y un button
-const label2 = document.createElement("label")
-label2.innerText = "Eliminar todos los items: "
-seccionEliminar.appendChild(label2)
+//const label2 = document.createElement("label")
+//label2.innerText = "Eliminar todos los items: "
+//seccionEliminar.appendChild(label2)
 
-const button2 = document.createElement("button")
-button2.innerText = "Eliminar todo"
-seccionEliminar.appendChild(button2)
+//const button2 = document.createElement("button")
+//button2.innerText = "Eliminar todo"
+//seccionEliminar.appendChild(button2)
 
 // Selecciono el botón "Agregar"
 const presionarAgregar = document.querySelector(".agregarItem button")
